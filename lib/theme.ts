@@ -9,7 +9,7 @@ const roboto = Roboto({
 });
 
 const theme = createTheme({
-  colorSchemes: { light: true, dark: true },
+  colorSchemes: { light: true, dark: false },
   cssVariables: {
     colorSchemeSelector: "class",
   },
@@ -31,7 +31,28 @@ const theme = createTheme({
         },
       },
     },
+    MuiButton: {
+      styleOverrides: {
+        disableElevation: true,
+        root: {
+          boxShadow: "none",
+          "&:hover": {
+            boxShadow: "none",
+          },
+          "&:active": {
+            boxShadow: "none",
+          },
+          "&:focus": {
+            boxShadow: "none",
+          },
+        },
+      },
+    },
   },
+  shape: {
+    borderRadius: 16,
+  },
+  spacing: 4,
 });
 
 export default theme;
