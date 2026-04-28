@@ -4,6 +4,7 @@ export interface ItemProp {
 }
 
 export interface Product {
+  id: number;
   itemname: string;
   category: string;
   image: string;

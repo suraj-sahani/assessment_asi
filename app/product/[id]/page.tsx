@@ -1,22 +1,22 @@
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import {
   Box,
-  Container,
-  Typography,
   Button,
-  Grid,
-  Chip,
-  Paper,
-  Divider,
-  Stack,
   Card,
+  Chip,
+  Container,
+  Divider,
+  Grid,
+  Stack,
+  Typography,
 } from "@mui/material";
 
-import { getProductById } from "@/lib/product";
-import Link from "next/link";
-import { categoryIcons, products } from "@/lib/constants";
 import ProductCard from "@/components/product-card";
+import { categoryIcons, products } from "@/lib/constants";
+import { getProductById } from "@/lib/product";
 import Image from "next/image";
+import Link from "next/link";
+
 export default async function ProductDetailsPage({
   params,
 }: {
@@ -24,7 +24,7 @@ export default async function ProductDetailsPage({
 }) {
   const { id } = await params;
   const productDetails = id ? getProductById(id) : undefined;
-
+  console.dir({ id, productDetails });
   if (!productDetails) {
     return (
       <Box
@@ -45,15 +45,14 @@ export default async function ProductDetailsPage({
           We couldn&apos;t find what you&apos;re looking for.
         </Typography>
 
-        <Button
-          // component={RouterLink}
-          // to="/"
-          variant="contained"
-          startIcon={<ArrowBackIcon />}
-          sx={{ borderRadius: "999px", textTransform: "none", px: 3 }}
-        >
-          Back to catalog
-        </Button>
+        <Link href="/" style={{ textDecoration: "none" }}>
+          <Button
+            startIcon={<ArrowBackIcon />}
+            sx={{ textTransform: "none", mb: 1 }}
+          >
+            Back to catalog
+          </Button>
+        </Link>
       </Box>
     );
   }
@@ -76,7 +75,6 @@ export default async function ProductDetailsPage({
             Back to catalog
           </Button>
         </Link>
-        {/*<Link href={"/"}>Back to catalog</Link>*/}
 
         {/* Main Section */}
         <Grid container spacing={6} sx={{ mt: 2 }}>
@@ -184,9 +182,9 @@ export default async function ProductDetailsPage({
             </Typography>
 
             <Grid container spacing={3}>
-              {related.map((r, index) => (
+              {related.map((r) => (
                 <Grid size={{ xs: 12, sm: 6, lg: 3 }} key={r.itemname}>
-                  <ProductCard product={r} index={index} />
+                  <ProductCard product={r} />
                 </Grid>
               ))}
             </Grid>
