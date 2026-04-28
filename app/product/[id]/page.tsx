@@ -102,6 +102,7 @@ export default async function ProductDetailsPage({
                   width: "100%",
                   borderRadius: 16,
                 }}
+                loading="eager"
               />
             </Box>
           </Grid>

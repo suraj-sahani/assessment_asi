@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { CssBaseline, InitColorSchemeScript } from "@mui/material";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v16-appRouter";
+import Providers from "@/components/providers";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "@/lib/theme";
 
@@ -18,15 +19,17 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        <InitColorSchemeScript attribute="class" />
-        <AppRouterCacheProvider options={{ enableCssLayer: true }}>
-          <ThemeProvider theme={theme}>
-            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-            <CssBaseline />
+        <Providers>
+          <InitColorSchemeScript attribute="class" />
+          <AppRouterCacheProvider options={{ enableCssLayer: true }}>
+            <ThemeProvider theme={theme}>
+              {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+              <CssBaseline />
 
-            {children}
-          </ThemeProvider>
-        </AppRouterCacheProvider>
+              {children}
+            </ThemeProvider>
+          </AppRouterCacheProvider>
+        </Providers>
       </body>
     </html>
   );
