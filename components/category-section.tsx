@@ -20,24 +20,27 @@ export default function CategorySection({ category }: CategorySectionProps) {
           sx={{ flexDirection: "row", justifyContent: "space-between", gap: 4 }}
         >
           <Stack
-            sx={{ flexDirection: "row", gap: 3, mb: 3, alignItems: "center" }}
+            sx={{ flexDirection: "row", gap: 3, mb: 3, alignItems: "end" }}
           >
-            <Typography variant="h2" sx={{ fontSize: "2rem", fontWeight: 500 }}>
+            <Typography
+              variant="h2"
+              sx={{ fontSize: "1.5rem", fontWeight: 500 }}
+            >
               {categoryIcons[category.name]}
             </Typography>
 
-            <Box>
+            <Stack sx={{ flexDirection: "row", alignItems: "end", gap: 1.5 }}>
               <Typography
                 variant="h2"
                 sx={{ fontSize: "1.5rem", fontWeight: 500 }}
               >
                 {category.name}
-                <Typography variant="caption" component={"span"} sx={{ ml: 2 }}>
-                  ({category.items.length}{" "}
-                  {category.items.length === 1 ? "item" : "items"})
-                </Typography>
               </Typography>
-            </Box>
+              <Typography variant="caption" component={"span"}>
+                ({category.items.length}{" "}
+                {category.items.length === 1 ? "item" : "items"})
+              </Typography>
+            </Stack>
           </Stack>
 
           <Link
@@ -47,6 +50,7 @@ export default function CategorySection({ category }: CategorySectionProps) {
             <Button
               endIcon={<KeyboardArrowRightIcon />}
               sx={{ textTransform: "none", mb: 1 }}
+              variant="text"
             >
               View All
             </Button>

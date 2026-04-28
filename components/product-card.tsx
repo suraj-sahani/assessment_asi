@@ -5,48 +5,52 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { Box, Button, Chip, IconButton, Stack } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
+import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 interface ProductCardProps {
   product: Product;
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
+  const productTag = product.itemname.split(" ")[0];
+  const randomizeTag = useMemo(() => (Math.random() > 0.5 ? true : false), []);
   const [liked, setLiked] = useState(false);
 
   return (
-    <Link href={`/product/${product.id}`} style={{ textDecoration: "none" }}>
-      <Card
-        sx={{
-          height: "100%",
-          display: "flex",
-          flexDirection: "column",
-          cursor: "pointer",
-          background: "white",
-          borderRadius: 1.5,
-          border: "2px solid #ececec",
-          boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
-          gap: 4,
-        }}
-        style={{
-          padding: 10,
-        }}
-      >
-        <Box sx={{ position: "relative" }}>
-          <CardMedia
-            component="img"
-            height="240"
-            image={product.image}
+    <Card
+      sx={{
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+
+        background: "white",
+        borderRadius: 1.5,
+        border: "2px solid #ececec",
+        boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
+        gap: 4,
+        p: 2,
+      }}
+    >
+      <Link href={`/product/${product.id}`} style={{ textDecoration: "none" }}>
+        <Box sx={{ position: "relative", cursor: "pointer" }}>
+          <Image
+            src={product.image}
             alt={product.itemname}
-            sx={{
+            height={200}
+            width={200}
+            style={{
               objectFit: "cover",
-              borderRadius: 1,
+              borderRadius: 16,
               filter: "brightness(0.75)",
+              width: "100%",
+              aspectRatio: "3/2",
             }}
+            loading="eager"
           />
+
           <Box sx={{ position: "absolute", top: 8, right: 8 }}>
             <IconButton
               onClick={(e) => {
@@ -59,6 +63,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                 position: "relative",
                 color: liked ? "error.main" : "text.secondary",
                 border: "2px solid #ececec",
+                p: 1,
 
                 "& .filled": {
                   position: "absolute",
@@ -77,9 +82,6 @@ export default function ProductCard({ product }: ProductCardProps) {
                   opacity: 0,
                 },
               }}
-              style={{
-                padding: 4,
-              }}
             >
               <FavoriteBorderIcon
                 className="outline"
@@ -96,49 +98,54 @@ export default function ProductCard({ product }: ProductCardProps) {
             </IconButton>
           </Box>
         </Box>
+      </Link>
 
-        <CardContent sx={{ flexGrow: 1, p: 0, ":last-child": { pb: 0 } }}>
-          <Stack sx={{ gap: 2 }}>
-            <Box
+      <CardContent sx={{ flexGrow: 1, p: 0, ":last-child": { pb: 0 } }}>
+        <Stack sx={{ gap: 2 }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 2,
+              mb: 1,
+            }}
+          >
+            {randomizeTag ? (
+              <Chip
+                label="Best Seller"
+                variant="filled"
+                size="small"
+                sx={{
+                  width: "fit-content",
+                  bgcolor: `#a4fca490`,
+                  color: "green",
+                  px: 1.25,
+                }}
+              />
+            ) : (
+              <Typography
+                variant="caption"
+                sx={{ color: (theme) => theme.palette.success.main }}
+              >
+                {productTag}
+              </Typography>
+            )}
+            <Typography
+              variant="h6"
+              component="h3"
               sx={{
-                display: "flex",
-                flexDirection: "column",
-                gap: 1,
-                mb: 1,
+                flexGrow: 1,
+                color: (theme) => theme.palette.grey[900],
+                fontSize: "14px",
               }}
             >
-              {Math.random() > 0.5 ? (
-                <Chip
-                  label="Best Seller"
-                  variant="filled"
-                  size="small"
-                  sx={{
-                    width: "fit-content",
-                    bgcolor: `#a4fca490`,
-                    color: "green",
-                  }}
-                  style={{ paddingInline: 6 }}
-                />
-              ) : (
-                <Typography
-                  variant="caption"
-                  sx={{ color: (theme) => theme.palette.success.main }}
-                >
-                  {product.itemname.split(" ")[0]}
-                </Typography>
-              )}
-              <Typography
-                variant="h6"
-                component="h3"
-                sx={{
-                  flexGrow: 1,
-                  color: (theme) => theme.palette.grey[900],
-                  fontSize: "14px",
-                }}
-              >
-                {product.itemname}
-              </Typography>
-            </Box>
+              {product.itemname}
+            </Typography>
+          </Box>
+          <Link
+            href={`/product/${product.id}`}
+            style={{ textDecoration: "none" }}
+          >
             <Button
               variant="contained"
               fullWidth
@@ -156,9 +163,9 @@ export default function ProductCard({ product }: ProductCardProps) {
             >
               Buy Now
             </Button>
-          </Stack>
-        </CardContent>
-      </Card>
-    </Link>
+          </Link>
+        </Stack>
+      </CardContent>
+    </Card>
   );
 }
